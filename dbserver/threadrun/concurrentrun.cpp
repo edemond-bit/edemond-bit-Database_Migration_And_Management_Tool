@@ -1,0 +1,70 @@
+#include <stdio.h>
+#include <iostream.h>
+#include <qstring.h>
+#include <qstringlist.h>
+#include "concurrentrun.h"
+
+QWaitCondition waitCond;
+
+void threadRun::genotypeCalculation()
+{
+    QString temp_readBuf,readBuf,writeBuf;
+    
+    QFile fpRead(fileName);
+    if(fpRead.open(IO_ReadOnly | IO_Truncate))
+    {
+	QTextStream fpIn(&fpRead);
+	fpIn.setEncoding(QTextStream::UnicodeUTF8);
+	QFile fpWrite(saveFile);
+	if(fpWrite.open(IO_WriteOnly | IO_Truncate))
+	{
+	    QTextStream fpOut(&fpWrite);
+	    fpOut.setEncoding(QTextStream::UnicodeUTF8);
+	    while(!fpIn.atEnd())
+	    {
+		temp_readBuf = fpIn.readLine();
+		writeBuf = temp_readBuf.section(",",0,0);
+		if(retVal == 1)
+		    writeBuf += "\t" + temp_readBuf.section(",",1,1);
+		readBuf = temp_readBuf.section(",",(retVal == 1 ? 2 : 1),-1);
+		o_aa = readBuf.contains("AA",false);
+		if(o_aa == 0)
+		    o_aa = readBuf.contains("A A",false);
+		o_ab = readBuf.contains("AB",false);
+		if(o_ab == 0)
+		    o_ab = readBuf.contains("A B",false);
+		o_bb = readBuf.contains("BB",false);
+		if(o_bb == 0)
+		    o_bb = readBuf.contains("B B",false);
+		noCall = readBuf.contains("NoCall",false);
+		if(noCall == 0)
+		    noCall = readBuf.contains("0 0",false);
+		writeBuf += "\t" + QString::number(o_aa) + "\t" + QString::number(o_ab) + "\t" + QString::number(o_bb) + "\t" + QString::number(o_aa + o_ab + o_bb) + "\t" + QString::number(noCall);
+
+		if(mA) // Allele Frequency Calculation
+		{
+		    p = (double(2*o_aa + o_ab)/double(2.0*(o_aa + o_ab + o_bb)));
+		    q = 1.0 - p;
+		    writeBuf += "\t" + QString::number(p*100.0) + "\t" + QString::number(q*100.0);
+		}
+
+		if(mH) //Hardiwinebarg Calculation
+		{
+		    double n = (o_aa + o_ab + o_bb), e_aa, e_ab, e_bb;
+		    double chi_sq;
+		    
+		    e_aa = p*p*n;
+		    e_ab = p*q*n;
+		    e_bb = q*q*n;
+		    chi_sq = pow((o_aa - e_aa),2.0)/e_aa + pow((o_ab - e_ab),2.0)/e_ab + pow((o_bb - e_bb),2.0)/e_bb;
+		    writeBuf += "\t" + QString::number(chi_sq);
+		}
+		writeBuf += "\n";
+		fpOut << writeBuf;
+		waitCond.wait(2);
+	    }
+	    fpWrite.close();
+	}
+	fpRead.close();
+    }
+}

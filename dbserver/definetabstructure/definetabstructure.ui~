@@ -1,0 +1,640 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>definetabstructure</class>
+<widget class="QWidget">
+    <property name="name">
+        <cstring>definetabstructure</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>407</width>
+            <height>382</height>
+        </rect>
+    </property>
+    <property name="palette">
+        <palette>
+            <active>
+                <color>
+                    <red>115</red>
+                    <green>115</green>
+                    <blue>85</blue>
+                </color>
+                <color>
+                    <red>221</red>
+                    <green>201</green>
+                    <blue>192</blue>
+                </color>
+                <color>
+                    <red>255</red>
+                    <green>255</green>
+                    <blue>255</blue>
+                </color>
+                <color>
+                    <red>238</red>
+                    <green>228</green>
+                    <blue>223</blue>
+                </color>
+                <color>
+                    <red>110</red>
+                    <green>100</green>
+                    <blue>96</blue>
+                </color>
+                <color>
+                    <red>147</red>
+                    <green>134</green>
+                    <blue>128</blue>
+                </color>
+                <color>
+                    <red>115</red>
+                    <green>115</green>
+                    <blue>85</blue>
+                </color>
+                <color>
+                    <red>242</red>
+                    <green>228</green>
+                    <blue>249</blue>
+                </color>
+                <color>
+                    <red>115</red>
+                    <green>115</green>
+                    <blue>85</blue>
+                </color>
+                <color>
+                    <red>242</red>
+                    <green>228</green>
+                    <blue>249</blue>
+                </color>
+                <color>
+                    <red>227</red>
+                    <green>206</green>
+                    <blue>198</blue>
+                </color>
+                <color>
+                    <red>0</red>
+                    <green>0</green>
+                    <blue>0</blue>
+                </color>
+                <color>
+                    <red>115</red>
+                    <green>115</green>
+                    <blue>85</blue>
+                </color>
+                <color>
+                    <red>242</red>
+                    <green>228</green>
+                    <blue>249</blue>
+                </color>
+                <color>
+                    <red>0</red>
+                    <green>0</green>
+                    <blue>255</blue>
+                </color>
+                <color>
+                    <red>170</red>
+                    <green>0</green>
+                    <blue>0</blue>
+                </color>
+            </active>
+            <disabled>
+                <color>
+                    <red>128</red>
+                    <green>128</green>
+                    <blue>128</blue>
+                </color>
+                <color>
+                    <red>221</red>
+                    <green>201</green>
+                    <blue>192</blue>
+                </color>
+                <color>
+                    <red>255</red>
+                    <green>255</green>
+                    <blue>255</blue>
+                </color>
+                <color>
+                    <red>254</red>
+                    <green>232</green>
+                    <blue>221</blue>
+                </color>
+                <color>
+                    <red>110</red>
+                    <green>100</green>
+                    <blue>96</blue>
+                </color>
+                <color>
+                    <red>147</red>
+                    <green>134</green>
+                    <blue>128</blue>
+                </color>
+                <color>
+                    <red>115</red>
+                    <green>115</green>
+                    <blue>85</blue>
+                </color>
+                <color>
+                    <red>242</red>
+                    <green>228</green>
+                    <blue>249</blue>
+                </color>
+                <color>
+                    <red>128</red>
+                    <green>128</green>
+                    <blue>128</blue>
+                </color>
+                <color>
+                    <red>242</red>
+                    <green>228</green>
+                    <blue>249</blue>
+                </color>
+                <color>
+                    <red>227</red>
+                    <green>206</green>
+                    <blue>198</blue>
+                </color>
+                <color>
+                    <red>0</red>
+                    <green>0</green>
+                    <blue>0</blue>
+                </color>
+                <color>
+                    <red>115</red>
+                    <green>115</green>
+                    <blue>85</blue>
+                </color>
+                <color>
+                    <red>242</red>
+                    <green>228</green>
+                    <blue>249</blue>
+                </color>
+                <color>
+                    <red>0</red>
+                    <green>0</green>
+                    <blue>255</blue>
+                </color>
+                <color>
+                    <red>170</red>
+                    <green>0</green>
+                    <blue>0</blue>
+                </color>
+            </disabled>
+            <inactive>
+                <color>
+                    <red>115</red>
+                    <green>115</green>
+                    <blue>85</blue>
+                </color>
+                <color>
+                    <red>221</red>
+                    <green>201</green>
+                    <blue>192</blue>
+                </color>
+                <color>
+                    <red>255</red>
+                    <green>255</green>
+                    <blue>255</blue>
+                </color>
+                <color>
+                    <red>254</red>
+                    <green>232</green>
+                    <blue>221</blue>
+                </color>
+                <color>
+                    <red>110</red>
+                    <green>100</green>
+                    <blue>96</blue>
+                </color>
+                <color>
+                    <red>147</red>
+                    <green>134</green>
+                    <blue>128</blue>
+                </color>
+                <color>
+                    <red>115</red>
+                    <green>115</green>
+                    <blue>85</blue>
+                </color>
+                <color>
+                    <red>242</red>
+                    <green>228</green>
+                    <blue>249</blue>
+                </color>
+                <color>
+                    <red>115</red>
+                    <green>115</green>
+                    <blue>85</blue>
+                </color>
+                <color>
+                    <red>242</red>
+                    <green>228</green>
+                    <blue>249</blue>
+                </color>
+                <color>
+                    <red>227</red>
+                    <green>206</green>
+                    <blue>198</blue>
+                </color>
+                <color>
+                    <red>0</red>
+                    <green>0</green>
+                    <blue>0</blue>
+                </color>
+                <color>
+                    <red>115</red>
+                    <green>115</green>
+                    <blue>85</blue>
+                </color>
+                <color>
+                    <red>242</red>
+                    <green>228</green>
+                    <blue>249</blue>
+                </color>
+                <color>
+                    <red>0</red>
+                    <green>0</green>
+                    <blue>255</blue>
+                </color>
+                <color>
+                    <red>170</red>
+                    <green>0</green>
+                    <blue>0</blue>
+                </color>
+            </inactive>
+        </palette>
+    </property>
+    <property name="caption">
+        <string>Table structure definition [new table creation]</string>
+    </property>
+    <property name="icon">
+        <pixmap>image0</pixmap>
+    </property>
+    <widget class="QComboBox">
+        <property name="name">
+            <cstring>cmbdatabase</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>178</x>
+                <y>9</y>
+                <width>120</width>
+                <height>25</height>
+            </rect>
+        </property>
+    </widget>
+    <widget class="QLabel">
+        <property name="name">
+            <cstring>textLabel2_2</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>64</x>
+                <y>10</y>
+                <width>110</width>
+                <height>21</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string>&lt;b&gt;Select Database :&lt;/b&gt;</string>
+        </property>
+    </widget>
+    <widget class="QLabel">
+        <property name="name">
+            <cstring>textLabel1</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>89</x>
+                <y>41</y>
+                <width>84</width>
+                <height>21</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string>&lt;b&gt;Table name :&lt;/b&gt;</string>
+        </property>
+    </widget>
+    <widget class="QLineEdit">
+        <property name="name">
+            <cstring>txttablename</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>178</x>
+                <y>43</y>
+                <width>120</width>
+                <height>22</height>
+            </rect>
+        </property>
+        <property name="frameShape">
+            <enum>WinPanel</enum>
+        </property>
+    </widget>
+    <widget class="QGroupBox">
+        <property name="name">
+            <cstring>groupBox2</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>4</x>
+                <y>69</y>
+                <width>400</width>
+                <height>267</height>
+            </rect>
+        </property>
+        <property name="title">
+            <string>Table structure definition</string>
+        </property>
+        <widget class="QButtonGroup">
+            <property name="name">
+                <cstring>colPanel</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>5</x>
+                    <y>149</y>
+                    <width>390</width>
+                    <height>113</height>
+                </rect>
+            </property>
+            <property name="title">
+                <string>Column details</string>
+            </property>
+            <widget class="QLineEdit">
+                <property name="name">
+                    <cstring>txtlength</cstring>
+                </property>
+                <property name="geometry">
+                    <rect>
+                        <x>77</x>
+                        <y>83</y>
+                        <width>100</width>
+                        <height>22</height>
+                    </rect>
+                </property>
+                <property name="frameShape">
+                    <enum>WinPanel</enum>
+                </property>
+            </widget>
+            <widget class="QLineEdit">
+                <property name="name">
+                    <cstring>txtcolname</cstring>
+                </property>
+                <property name="geometry">
+                    <rect>
+                        <x>77</x>
+                        <y>19</y>
+                        <width>100</width>
+                        <height>22</height>
+                    </rect>
+                </property>
+                <property name="frameShape">
+                    <enum>WinPanel</enum>
+                </property>
+            </widget>
+            <widget class="QLabel">
+                <property name="name">
+                    <cstring>textLabel2</cstring>
+                </property>
+                <property name="geometry">
+                    <rect>
+                        <x>8</x>
+                        <y>52</y>
+                        <width>67</width>
+                        <height>20</height>
+                    </rect>
+                </property>
+                <property name="text">
+                    <string>Data type :</string>
+                </property>
+            </widget>
+            <widget class="QLabel">
+                <property name="name">
+                    <cstring>textLabel1_3</cstring>
+                </property>
+                <property name="geometry">
+                    <rect>
+                        <x>24</x>
+                        <y>83</y>
+                        <width>50</width>
+                        <height>20</height>
+                    </rect>
+                </property>
+                <property name="text">
+                    <string>Length :</string>
+                </property>
+            </widget>
+            <widget class="QComboBox">
+                <property name="name">
+                    <cstring>cmbdttype</cstring>
+                </property>
+                <property name="geometry">
+                    <rect>
+                        <x>77</x>
+                        <y>50</y>
+                        <width>100</width>
+                        <height>25</height>
+                    </rect>
+                </property>
+            </widget>
+            <widget class="QLabel">
+                <property name="name">
+                    <cstring>textLabel1_2</cstring>
+                </property>
+                <property name="geometry">
+                    <rect>
+                        <x>30</x>
+                        <y>19</y>
+                        <width>45</width>
+                        <height>20</height>
+                    </rect>
+                </property>
+                <property name="text">
+                    <string>Name :</string>
+                </property>
+            </widget>
+            <widget class="QLabel">
+                <property name="name">
+                    <cstring>lblHints1</cstring>
+                </property>
+                <property name="geometry">
+                    <rect>
+                        <x>186</x>
+                        <y>52</y>
+                        <width>200</width>
+                        <height>20</height>
+                    </rect>
+                </property>
+                <property name="text">
+                    <string></string>
+                </property>
+            </widget>
+            <widget class="QLabel">
+                <property name="name">
+                    <cstring>lblHints2</cstring>
+                </property>
+                <property name="geometry">
+                    <rect>
+                        <x>186</x>
+                        <y>83</y>
+                        <width>200</width>
+                        <height>20</height>
+                    </rect>
+                </property>
+                <property name="text">
+                    <string></string>
+                </property>
+            </widget>
+        </widget>
+        <widget class="QTable">
+            <property name="name">
+                <cstring>table1</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>5</x>
+                    <y>17</y>
+                    <width>390</width>
+                    <height>130</height>
+                </rect>
+            </property>
+            <property name="numRows">
+                <number>11</number>
+            </property>
+            <property name="numCols">
+                <number>4</number>
+            </property>
+        </widget>
+    </widget>
+    <widget class="QButtonGroup">
+        <property name="name">
+            <cstring>buttonGroup1</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>4</x>
+                <y>339</y>
+                <width>400</width>
+                <height>40</height>
+            </rect>
+        </property>
+        <property name="title">
+            <string></string>
+        </property>
+        <widget class="QPushButton">
+            <property name="name">
+                <cstring>cmdClose</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>266</x>
+                    <y>5</y>
+                    <width>80</width>
+                    <height>30</height>
+                </rect>
+            </property>
+            <property name="text">
+                <string>Close</string>
+            </property>
+        </widget>
+        <widget class="QPushButton">
+            <property name="name">
+                <cstring>cmdCreate</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>56</x>
+                    <y>5</y>
+                    <width>80</width>
+                    <height>30</height>
+                </rect>
+            </property>
+            <property name="text">
+                <string>Create</string>
+            </property>
+        </widget>
+    </widget>
+</widget>
+<images>
+    <image name="image0">
+        <data format="PNG" length="2665">89504e470d0a1a0a0000000d494844520000003200000031080600000098abfa1f00000a30494441546881dd9a2f9024b995c67f733111fdd88aad58896db22be664936cead81c6bb605072e5ce631b2990d07b6d18dd930f720e7a0cb435b50cb5e322d93d96bd40652feabaeee69ef45ac37fca23b2a2b5329bd4fd2f7de27a95edcdfdff3ef602f7ffaf4e99f46122541bf7cefd1f9da923cab0ef1365f7704565f081a36cfbf645fbf7efde2c553237277c77d1a466e2c924e306846f3c61dc03011c4006c75ff4b66ab72d3f5e2bc77d07a23b49e2e35840e76bbdd8bc76abb08641cc7fbf7a7c8ed6d26e673c79edf53ff7f5b8006075de3b8de27daf65baeaed880da0019c7f1fe5d0f1f4f86a5d32fe8f0734c0aaea4b476e2ddbb8e57afbe9dc1bc48b7b733921bcda839c86049c1f2a51affb59633901184776f0fc0058efcd7a7f1fec40e32606006c41f810c3963f3cd5fd8ccaa43b95c5ba691c40f7ffb9f79445e6e5e10431aea88d419eabf29b4a8ff2e8de43c81c995325b8005f0331cbc14136c7d61abfa271009b282dbbeb605b26ea3012f20b27ddffcae44a8470627a7e53ab006fda0e499d3940a85b38a0b08b3151878d0092f7ffafc799e5b5d4c8495275281cc4d5740e7fe6cac9697a9c1b39ecbe9bc82b54d4eae819d8133307304076bdf371cf9efcf3fde9ffc373308e7c0c91644e55a697202f104759a5cc0a53c967aa611da0492b30aa667abcf6544cabc6f3cfcf0b7bf5ee68841e9c10c368dc4d5b6b3a03e7b98c3c8099c87bd40004218414193d2d4fafa0cd95d20c7348701e391069eb00d1081b99765aae7ee429b2b0e4eb617e88e7064dc94ddb59ecf438faa1242a07182a54892965e3389501a5a8d90cc15af03c81780ace7591b13fe118e982da4df582e7c70064704092c2f003fc50852f4532040a3900258e2da43cf2d511d1bf6ca1ac82fc19104a26504bab0e3fd355cd5a9787707298d80b2f32d631a5055fa5eabe370e8ca28a8c2cd2064bfafcefe921c510809901d08bceb46aef08ce3c0ceb7a43480f6dcf4d075655a05946307371f3ed2c7c09f6e8ccec1f541c02bbd4606ff069ec391b3db0f39325d3fc1917082831b510f31eff8f0e63300e370533eb59fcbb64e91a8402045252605e0d8297fea859be8705ecbf4a327a784faeb07201ec0398b172f52df2f5a2b26d4fba5ec258e44685c214aae53e4ed61d8541a4fca9003ad2b4e0f391054695a8803685dbfa4dc90cd10334258c897b327b97691269303abe4b8ef1ade76ddfccecbaf5fbd9ae759d4f1fed676e0405ce1880f4b8fa413b47924a228df129a126295b7284700b407a5a3d78006a5e386be07752dc794407a34c2aded67070df0d1d1caa4b895210bd91fb09c10ac72641a0a41227cfddb57973992a6c14885d809c81f46e84a0ffad32bd8bf0320f02d2100ecb8d10ed55a46f74411427783f57bfa6320f43d391b37a70eec50fda9e4ad8bb2647092863db162b9c14c405c1d931a7d2ae9638a9b59f0a868640a10b2c3e20e97469af0e755e111d8814e7943e906e83b9d5549ea7ad040a661cf409f055c5ba3d16a8558c3ab6647963da48fa882e384eddf3267fe296a6505b765cdb33862065e133ebd2f0f4247b2a68c80c4329f263809825fae37d12e7b92340f94b254476768a6800201f35d2db8e54870f0fd776f9711597364e0421ef90afc08dfc9efd0460b0ee0465b7a7604461adfb0b75b52560efb00404c4af0150c05dcedc9336477a6b3049bf34501e8c4213465ba5ac25cb392f1a55c83f1c7578f70649d47e67b7710eaf40995d06528221677447644db716b2d073fd03591140b60ef42edd902c8934a2fd729b548916da84d5970159ce504aee14bf61f5f2c0174ebbd9fb9b506714bfb263ba2b4405101de059c4c604a39e712ad2807a70584ac38c276cde0fc2429e206e463b6d9d7ea34136ac212168e04d1ed5b7d0167e637b70f9640e700591c02928679e72ab8d2d39e48264ca498c14ee3e470e4a6d62f7929678009ce096bdf5f7efdfaf53ccffacf3fdec7e69b2204575aeb386c131e1d0494a41d31ef663f9cfb0b8256083667715d6f5f551b7220b21ed2a98c91012f06a9275b43892b52b451cdcc0dc61f57be3f6b6a5db2144bb29bbfdb48cc9e69dd94adf0621db954aee93912738bcaf9bc9f568765141d46ae91f1d2d2fedc9e0544d75b9a2b1b723bb71f00b54072dbb2c14320a0fec809876663303f13fe921946fe92fbe7a2f1391cd1a4a08a20783c8984d1e10c3a3e7190843094679a00c101c1c214b4f02971003279e9e2d9d7ed52d7eafb3347dce4f9c211ff1447ecf3787feb77f38681979247f804bd06f081200105941d9660ef3e111a054aa3f9541c4a799286107943c493d37a7d50f513b6b957fe6a16cfa948946692260b47be6b5ad6be6ff248cd3fe06b4677e55d6d5e134f40665242b3b53290a2cedc48b9b87f3ad52c8e30983c585a3eb5cf172493b39100648a8c138704c4a367db4c2fefee988767168d5a5e532b1b72d2568d27bb52978d98ec102b89f23685e2007d21785442031f53f7a8d75273e02c68d7b951a09c5b34b547abb81437ef76c614997cbfbae2c5cbdc7f9a2bef34135c2c154dbace01a7aad12c5627863aad5be81544310e65761974a10383c334b91ee3ed66ff6ae9753383503bc1afa29b2d6ad63b58f97ebfddfbfdfce37d3cd35a936874c348fca054ed8e4f3d8690cd23924a724c0388238b9b2506668b96627176f9ba5d3c1906e954c0f83d346f16007992e499c6dbe36b76e081d692abf29fdb1d0c142201898017c58b922c902d574d641b10ab4cb7baf71088cdcfa7fd2881d0b289564fd8b313a208d06def658483575aeb0170967096696d803c54a13aad25ec0c846d4154553bef98840ece72d253f6ac3c426d636f9043424e11736eeea5b78dd2c07c7e78f0705018b2ae587ddea5abbc315f4e4c6feb14d6524e5846f73979e4a2d6faaa3ccb7f2f113407c8f9ff90538f38c79184783836104f53302867803e9eb88901b322046593f4d6e0ea48e484b980b46f96119a724a05b0d65abf7f2c8f3cd7e4cd6f8a63a75b0e5ef14d00a079739c578b1e68f66505134fcaf71f6d7590ba05009475476891e6fac2d1c297ed67010190c36fc079de0f1f38369e103a76de33ae74996ad9f3c5051cba52500b80f9b37983348772eb091022b2f4c3ddddb265fae00cd1157d728923b66a7fae2c43f099366d1bd7a025c7548bd930a32a80559697507285ac0e52d6e17adef3b5d25875c439f8feed11b874867881232235fc4e1cc9cbd45dff8b8eb834b0f70651c112eeec14483328996c42c2239bc864674ed7883647bbbcf4644e34cef8e17f1fc923ef83709dfe4ef25f2d8ae18a6759f63bb2dfa180a38012acaae16ace917d911d3229d3796b68317b70b1bd1611ae8fd79b771efc60e0ee8efb3f0c230a44e770ff59c296dd414a65542e8dc8a569dd9cdddb9c5a3d38fa5e2a590e53a7886588250e5ed8770dd787f6c1af20361c39374b82aaa241512d0b2c71feacd023d7d5d6fb6879da4f589d23caf94bb3e3a5879cf734ad1134d0b4676d57fbe26f51d67677c77d4a23da43ef235263a99a2ba11388e9890ace4c0c7ce590044740912a10dbc608a1c3fbdd839f6a3c66cf06f26bb79fbdf9f06bb37f000f8180e5ebcb5fd80000000049454e44ae426082</data>
+    </image>
+</images>
+<connections>
+    <connection>
+        <sender>cmdCreate</sender>
+        <signal>clicked()</signal>
+        <receiver>definetabstructure</receiver>
+        <slot>cmdCreate_clicked()</slot>
+    </connection>
+    <connection>
+        <sender>cmdClose</sender>
+        <signal>clicked()</signal>
+        <receiver>definetabstructure</receiver>
+        <slot>cmdClose_clicked()</slot>
+    </connection>
+    <connection>
+        <sender>table1</sender>
+        <signal>clicked(int,int,int,const QPoint&amp;)</signal>
+        <receiver>definetabstructure</receiver>
+        <slot>table1_clicked(int,int,int,const QPoint&amp;)</slot>
+    </connection>
+    <connection>
+        <sender>txtcolname</sender>
+        <signal>textChanged(const QString&amp;)</signal>
+        <receiver>definetabstructure</receiver>
+        <slot>txtcolname_textChanged(const QString&amp;)</slot>
+    </connection>
+    <connection>
+        <sender>cmbdttype</sender>
+        <signal>activated(int)</signal>
+        <receiver>definetabstructure</receiver>
+        <slot>cmbdttype_activated(int)</slot>
+    </connection>
+    <connection>
+        <sender>txtlength</sender>
+        <signal>textChanged(const QString&amp;)</signal>
+        <receiver>definetabstructure</receiver>
+        <slot>txtlength_textChanged(const QString&amp;)</slot>
+    </connection>
+</connections>
+<tabstops>
+    <tabstop>cmbdatabase</tabstop>
+    <tabstop>txttablename</tabstop>
+    <tabstop>table1</tabstop>
+    <tabstop>txtcolname</tabstop>
+    <tabstop>cmbdttype</tabstop>
+    <tabstop>txtlength</tabstop>
+    <tabstop>cmdCreate</tabstop>
+    <tabstop>cmdClose</tabstop>
+</tabstops>
+<includes>
+    <include location="local" impldecl="in implementation">definetabstructure.ui.h</include>
+</includes>
+<forwards>
+    <forward>class QSqlDatabase</forward>
+</forwards>
+<variables>
+    <variable access="private">QString workDir;</variable>
+    <variable access="private">int currentRow;</variable>
+</variables>
+<slots>
+    <slot>loadDatabaseList( QString wDir )</slot>
+    <slot>initialRow()</slot>
+    <slot access="private" specifier="non virtual">table1_clicked( int row, int col, int button, const QPoint &amp; p )</slot>
+    <slot>refreshColumnDetails()</slot>
+    <slot access="private" specifier="non virtual">txtcolname_textChanged( const QString &amp; text )</slot>
+    <slot>cmbdttype_activated( int id )</slot>
+    <slot>txtlength_textChanged( const QString &amp; text )</slot>
+    <slot>cmdCreate_clicked()</slot>
+    <slot>cmdClose_clicked()</slot>
+    <slot>nowCreateTheTable()</slot>
+    <slot>prepareANDExecuteTheQuery( QString dbName )</slot>
+    <slot access="private" specifier="non virtual">keyPressEvent( QKeyEvent * e )</slot>
+</slots>
+<functions>
+    <function access="private" specifier="non virtual">init()</function>
+    <function access="private" specifier="non virtual" returnType="bool">validateTableDefinition()</function>
+    <function access="private" specifier="non virtual" returnType="bool">checkTbNameSyntax( QString &amp; tbName )</function>
+</functions>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>

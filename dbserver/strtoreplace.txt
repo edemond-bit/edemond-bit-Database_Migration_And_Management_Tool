@@ -1,0 +1,6 @@
+5
+.birdseed-v2 
+_LVPEI 
+_(GenomeWideSNP_6) 
+- 
+ 

@@ -1,0 +1,463 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>frmcrypticsettings</class>
+<widget class="QWidget">
+    <property name="name">
+        <cstring>frmcrypticsettings</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>276</width>
+            <height>165</height>
+        </rect>
+    </property>
+    <property name="palette">
+        <palette>
+            <active>
+                <color>
+                    <red>104</red>
+                    <green>104</green>
+                    <blue>46</blue>
+                </color>
+                <color>
+                    <red>231</red>
+                    <green>206</green>
+                    <blue>188</blue>
+                </color>
+                <color>
+                    <red>255</red>
+                    <green>255</green>
+                    <blue>255</blue>
+                </color>
+                <color>
+                    <red>243</red>
+                    <green>230</green>
+                    <blue>221</blue>
+                </color>
+                <color>
+                    <red>115</red>
+                    <green>103</green>
+                    <blue>94</blue>
+                </color>
+                <color>
+                    <red>154</red>
+                    <green>137</green>
+                    <blue>126</blue>
+                </color>
+                <color>
+                    <red>104</red>
+                    <green>104</green>
+                    <blue>46</blue>
+                </color>
+                <color>
+                    <red>247</red>
+                    <green>223</green>
+                    <blue>233</blue>
+                </color>
+                <color>
+                    <red>104</red>
+                    <green>104</green>
+                    <blue>46</blue>
+                </color>
+                <color>
+                    <red>247</red>
+                    <green>223</green>
+                    <blue>233</blue>
+                </color>
+                <color>
+                    <red>226</red>
+                    <green>201</green>
+                    <blue>183</blue>
+                </color>
+                <color>
+                    <red>0</red>
+                    <green>0</green>
+                    <blue>0</blue>
+                </color>
+                <color>
+                    <red>104</red>
+                    <green>104</green>
+                    <blue>46</blue>
+                </color>
+                <color>
+                    <red>247</red>
+                    <green>223</green>
+                    <blue>233</blue>
+                </color>
+                <color>
+                    <red>0</red>
+                    <green>0</green>
+                    <blue>255</blue>
+                </color>
+                <color>
+                    <red>162</red>
+                    <green>81</green>
+                    <blue>0</blue>
+                </color>
+            </active>
+            <disabled>
+                <color>
+                    <red>128</red>
+                    <green>128</green>
+                    <blue>128</blue>
+                </color>
+                <color>
+                    <red>231</red>
+                    <green>206</green>
+                    <blue>188</blue>
+                </color>
+                <color>
+                    <red>255</red>
+                    <green>255</green>
+                    <blue>255</blue>
+                </color>
+                <color>
+                    <red>255</red>
+                    <green>233</green>
+                    <blue>218</blue>
+                </color>
+                <color>
+                    <red>115</red>
+                    <green>103</green>
+                    <blue>94</blue>
+                </color>
+                <color>
+                    <red>154</red>
+                    <green>137</green>
+                    <blue>126</blue>
+                </color>
+                <color>
+                    <red>104</red>
+                    <green>104</green>
+                    <blue>46</blue>
+                </color>
+                <color>
+                    <red>247</red>
+                    <green>223</green>
+                    <blue>233</blue>
+                </color>
+                <color>
+                    <red>128</red>
+                    <green>128</green>
+                    <blue>128</blue>
+                </color>
+                <color>
+                    <red>247</red>
+                    <green>223</green>
+                    <blue>233</blue>
+                </color>
+                <color>
+                    <red>226</red>
+                    <green>201</green>
+                    <blue>183</blue>
+                </color>
+                <color>
+                    <red>0</red>
+                    <green>0</green>
+                    <blue>0</blue>
+                </color>
+                <color>
+                    <red>104</red>
+                    <green>104</green>
+                    <blue>46</blue>
+                </color>
+                <color>
+                    <red>247</red>
+                    <green>223</green>
+                    <blue>233</blue>
+                </color>
+                <color>
+                    <red>0</red>
+                    <green>0</green>
+                    <blue>255</blue>
+                </color>
+                <color>
+                    <red>162</red>
+                    <green>81</green>
+                    <blue>0</blue>
+                </color>
+            </disabled>
+            <inactive>
+                <color>
+                    <red>104</red>
+                    <green>104</green>
+                    <blue>46</blue>
+                </color>
+                <color>
+                    <red>231</red>
+                    <green>206</green>
+                    <blue>188</blue>
+                </color>
+                <color>
+                    <red>255</red>
+                    <green>255</green>
+                    <blue>255</blue>
+                </color>
+                <color>
+                    <red>255</red>
+                    <green>233</green>
+                    <blue>218</blue>
+                </color>
+                <color>
+                    <red>115</red>
+                    <green>103</green>
+                    <blue>94</blue>
+                </color>
+                <color>
+                    <red>154</red>
+                    <green>137</green>
+                    <blue>126</blue>
+                </color>
+                <color>
+                    <red>104</red>
+                    <green>104</green>
+                    <blue>46</blue>
+                </color>
+                <color>
+                    <red>247</red>
+                    <green>223</green>
+                    <blue>233</blue>
+                </color>
+                <color>
+                    <red>104</red>
+                    <green>104</green>
+                    <blue>46</blue>
+                </color>
+                <color>
+                    <red>247</red>
+                    <green>223</green>
+                    <blue>233</blue>
+                </color>
+                <color>
+                    <red>226</red>
+                    <green>201</green>
+                    <blue>183</blue>
+                </color>
+                <color>
+                    <red>0</red>
+                    <green>0</green>
+                    <blue>0</blue>
+                </color>
+                <color>
+                    <red>104</red>
+                    <green>104</green>
+                    <blue>46</blue>
+                </color>
+                <color>
+                    <red>247</red>
+                    <green>223</green>
+                    <blue>233</blue>
+                </color>
+                <color>
+                    <red>0</red>
+                    <green>0</green>
+                    <blue>255</blue>
+                </color>
+                <color>
+                    <red>162</red>
+                    <green>81</green>
+                    <blue>0</blue>
+                </color>
+            </inactive>
+        </palette>
+    </property>
+    <property name="caption">
+        <string>Cryptic Settings</string>
+    </property>
+    <widget class="QGroupBox">
+        <property name="name">
+            <cstring>groupBox1</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>3</x>
+                <y>3</y>
+                <width>270</width>
+                <height>160</height>
+            </rect>
+        </property>
+        <property name="title">
+            <string></string>
+        </property>
+        <widget class="QLabel">
+            <property name="name">
+                <cstring>lblthreshold</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>7</x>
+                    <y>7</y>
+                    <width>130</width>
+                    <height>20</height>
+                </rect>
+            </property>
+            <property name="text">
+                <string>Enter threshold value:</string>
+            </property>
+        </widget>
+        <widget class="QLabel">
+            <property name="name">
+                <cstring>lblundefinedgenotype</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>7</x>
+                    <y>37</y>
+                    <width>130</width>
+                    <height>20</height>
+                </rect>
+            </property>
+            <property name="text">
+                <string>Undefined Genotype :</string>
+            </property>
+        </widget>
+        <widget class="QPushButton">
+            <property name="name">
+                <cstring>cmdadd</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>208</x>
+                    <y>67</y>
+                    <width>54</width>
+                    <height>23</height>
+                </rect>
+            </property>
+            <property name="text">
+                <string>Add</string>
+            </property>
+        </widget>
+        <widget class="QPushButton">
+            <property name="name">
+                <cstring>cmdremove</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>208</x>
+                    <y>100</y>
+                    <width>54</width>
+                    <height>23</height>
+                </rect>
+            </property>
+            <property name="text">
+                <string>Remove</string>
+            </property>
+        </widget>
+        <widget class="QLineEdit">
+            <property name="name">
+                <cstring>txtthreshold</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>141</x>
+                    <y>8</y>
+                    <width>121</width>
+                    <height>21</height>
+                </rect>
+            </property>
+            <property name="frameShape">
+                <enum>WinPanel</enum>
+            </property>
+        </widget>
+        <widget class="QTable">
+            <column>
+                <property name="text">
+                    <string>Undefined Genotype</string>
+                </property>
+            </column>
+            <property name="name">
+                <cstring>table1</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>6</x>
+                    <y>66</y>
+                    <width>190</width>
+                    <height>88</height>
+                </rect>
+            </property>
+            <property name="numRows">
+                <number>3</number>
+            </property>
+            <property name="numCols">
+                <number>1</number>
+            </property>
+        </widget>
+        <widget class="QLineEdit">
+            <property name="name">
+                <cstring>txtundefinedgenotype</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>141</x>
+                    <y>38</y>
+                    <width>121</width>
+                    <height>21</height>
+                </rect>
+            </property>
+            <property name="frameShape">
+                <enum>WinPanel</enum>
+            </property>
+        </widget>
+        <widget class="QPushButton">
+            <property name="name">
+                <cstring>cmdclose</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>208</x>
+                    <y>131</y>
+                    <width>54</width>
+                    <height>23</height>
+                </rect>
+            </property>
+            <property name="text">
+                <string>OK</string>
+            </property>
+        </widget>
+    </widget>
+</widget>
+<connections>
+    <connection>
+        <sender>cmdadd</sender>
+        <signal>clicked()</signal>
+        <receiver>frmcrypticsettings</receiver>
+        <slot>cmdadd_clicked()</slot>
+    </connection>
+    <connection>
+        <sender>cmdremove</sender>
+        <signal>clicked()</signal>
+        <receiver>frmcrypticsettings</receiver>
+        <slot>cmdremove_clicked()</slot>
+    </connection>
+    <connection>
+        <sender>cmdclose</sender>
+        <signal>clicked()</signal>
+        <receiver>frmcrypticsettings</receiver>
+        <slot>cmdclose_clicked()</slot>
+    </connection>
+    <connection>
+        <sender>txtthreshold</sender>
+        <signal>textChanged(const QString&amp;)</signal>
+        <receiver>frmcrypticsettings</receiver>
+        <slot>txtthreshold_textChanged(const QString&amp;)</slot>
+    </connection>
+</connections>
+<includes>
+    <include location="local" impldecl="in implementation">frmcrypticsettings.ui.h</include>
+</includes>
+<variables>
+    <variable access="private">int rowCount;</variable>
+</variables>
+<slots>
+    <slot access="private" specifier="non virtual">txtthreshold_textChanged( const QString &amp; text )</slot>
+    <slot access="private" specifier="non virtual">cmdadd_clicked()</slot>
+    <slot access="private" specifier="non virtual">cmdremove_clicked()</slot>
+    <slot access="private" specifier="non virtual">cmdclose_clicked()</slot>
+</slots>
+<functions>
+    <function access="private" specifier="non virtual">init()</function>
+</functions>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>

@@ -1,0 +1,488 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>frmDecisionDlg</class>
+<widget class="QDialog">
+    <property name="name">
+        <cstring>frmDecisionDlg</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>558</width>
+            <height>454</height>
+        </rect>
+    </property>
+    <property name="palette">
+        <palette>
+            <active>
+                <color>
+                    <red>104</red>
+                    <green>104</green>
+                    <blue>46</blue>
+                </color>
+                <color>
+                    <red>227</red>
+                    <green>208</green>
+                    <blue>196</blue>
+                </color>
+                <color>
+                    <red>255</red>
+                    <green>255</green>
+                    <blue>255</blue>
+                </color>
+                <color>
+                    <red>241</red>
+                    <green>231</green>
+                    <blue>225</blue>
+                </color>
+                <color>
+                    <red>113</red>
+                    <green>103</green>
+                    <blue>97</blue>
+                </color>
+                <color>
+                    <red>151</red>
+                    <green>138</green>
+                    <blue>130</blue>
+                </color>
+                <color>
+                    <red>104</red>
+                    <green>104</green>
+                    <blue>46</blue>
+                </color>
+                <color>
+                    <red>104</red>
+                    <green>104</green>
+                    <blue>46</blue>
+                </color>
+                <color>
+                    <red>104</red>
+                    <green>104</green>
+                    <blue>46</blue>
+                </color>
+                <color>
+                    <red>253</red>
+                    <green>231</green>
+                    <blue>229</blue>
+                </color>
+                <color>
+                    <red>229</red>
+                    <green>216</green>
+                    <blue>201</blue>
+                </color>
+                <color>
+                    <red>0</red>
+                    <green>0</green>
+                    <blue>0</blue>
+                </color>
+                <color>
+                    <red>104</red>
+                    <green>104</green>
+                    <blue>46</blue>
+                </color>
+                <color>
+                    <red>104</red>
+                    <green>104</green>
+                    <blue>46</blue>
+                </color>
+                <color>
+                    <red>0</red>
+                    <green>0</green>
+                    <blue>255</blue>
+                </color>
+                <color>
+                    <red>170</red>
+                    <green>0</green>
+                    <blue>0</blue>
+                </color>
+            </active>
+            <disabled>
+                <color>
+                    <red>128</red>
+                    <green>128</green>
+                    <blue>128</blue>
+                </color>
+                <color>
+                    <red>227</red>
+                    <green>208</green>
+                    <blue>196</blue>
+                </color>
+                <color>
+                    <red>255</red>
+                    <green>255</green>
+                    <blue>255</blue>
+                </color>
+                <color>
+                    <red>255</red>
+                    <green>237</green>
+                    <blue>226</blue>
+                </color>
+                <color>
+                    <red>113</red>
+                    <green>103</green>
+                    <blue>97</blue>
+                </color>
+                <color>
+                    <red>151</red>
+                    <green>138</green>
+                    <blue>130</blue>
+                </color>
+                <color>
+                    <red>104</red>
+                    <green>104</green>
+                    <blue>46</blue>
+                </color>
+                <color>
+                    <red>104</red>
+                    <green>104</green>
+                    <blue>46</blue>
+                </color>
+                <color>
+                    <red>128</red>
+                    <green>128</green>
+                    <blue>128</blue>
+                </color>
+                <color>
+                    <red>253</red>
+                    <green>231</green>
+                    <blue>229</blue>
+                </color>
+                <color>
+                    <red>229</red>
+                    <green>216</green>
+                    <blue>201</blue>
+                </color>
+                <color>
+                    <red>0</red>
+                    <green>0</green>
+                    <blue>0</blue>
+                </color>
+                <color>
+                    <red>104</red>
+                    <green>104</green>
+                    <blue>46</blue>
+                </color>
+                <color>
+                    <red>104</red>
+                    <green>104</green>
+                    <blue>46</blue>
+                </color>
+                <color>
+                    <red>0</red>
+                    <green>0</green>
+                    <blue>255</blue>
+                </color>
+                <color>
+                    <red>170</red>
+                    <green>0</green>
+                    <blue>0</blue>
+                </color>
+            </disabled>
+            <inactive>
+                <color>
+                    <red>104</red>
+                    <green>104</green>
+                    <blue>46</blue>
+                </color>
+                <color>
+                    <red>227</red>
+                    <green>208</green>
+                    <blue>196</blue>
+                </color>
+                <color>
+                    <red>255</red>
+                    <green>255</green>
+                    <blue>255</blue>
+                </color>
+                <color>
+                    <red>255</red>
+                    <green>237</green>
+                    <blue>226</blue>
+                </color>
+                <color>
+                    <red>113</red>
+                    <green>103</green>
+                    <blue>97</blue>
+                </color>
+                <color>
+                    <red>151</red>
+                    <green>138</green>
+                    <blue>130</blue>
+                </color>
+                <color>
+                    <red>104</red>
+                    <green>104</green>
+                    <blue>46</blue>
+                </color>
+                <color>
+                    <red>104</red>
+                    <green>104</green>
+                    <blue>46</blue>
+                </color>
+                <color>
+                    <red>104</red>
+                    <green>104</green>
+                    <blue>46</blue>
+                </color>
+                <color>
+                    <red>253</red>
+                    <green>231</green>
+                    <blue>229</blue>
+                </color>
+                <color>
+                    <red>229</red>
+                    <green>216</green>
+                    <blue>201</blue>
+                </color>
+                <color>
+                    <red>0</red>
+                    <green>0</green>
+                    <blue>0</blue>
+                </color>
+                <color>
+                    <red>104</red>
+                    <green>104</green>
+                    <blue>46</blue>
+                </color>
+                <color>
+                    <red>104</red>
+                    <green>104</green>
+                    <blue>46</blue>
+                </color>
+                <color>
+                    <red>0</red>
+                    <green>0</green>
+                    <blue>255</blue>
+                </color>
+                <color>
+                    <red>170</red>
+                    <green>0</green>
+                    <blue>0</blue>
+                </color>
+            </inactive>
+        </palette>
+    </property>
+    <property name="caption">
+        <string>Data Insertion/Updatation Statistics</string>
+    </property>
+    <widget class="QGroupBox">
+        <property name="name">
+            <cstring>groupBox10</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>4</x>
+                <y>-1</y>
+                <width>550</width>
+                <height>370</height>
+            </rect>
+        </property>
+        <property name="title">
+            <string>View Port</string>
+        </property>
+        <widget class="QTextEdit">
+            <property name="name">
+                <cstring>lEdit</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>4</x>
+                    <y>15</y>
+                    <width>540</width>
+                    <height>350</height>
+                </rect>
+            </property>
+            <property name="frameShape">
+                <enum>WinPanel</enum>
+            </property>
+        </widget>
+    </widget>
+    <widget class="QButtonGroup">
+        <property name="name">
+            <cstring>buttonGroup5</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>4</x>
+                <y>373</y>
+                <width>550</width>
+                <height>30</height>
+            </rect>
+        </property>
+        <property name="frameShape">
+            <enum>WinPanel</enum>
+        </property>
+        <property name="title">
+            <string></string>
+        </property>
+        <widget class="QRadioButton">
+            <property name="name">
+                <cstring>rdUpdate</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>231</x>
+                    <y>6</y>
+                    <width>70</width>
+                    <height>20</height>
+                </rect>
+            </property>
+            <property name="cursor">
+                <cursor>0</cursor>
+            </property>
+            <property name="text">
+                <string>Update</string>
+            </property>
+        </widget>
+        <widget class="QCheckBox">
+            <property name="name">
+                <cstring>chkApply</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>406</x>
+                    <y>7</y>
+                    <width>96</width>
+                    <height>20</height>
+                </rect>
+            </property>
+            <property name="cursor">
+                <cursor>0</cursor>
+            </property>
+            <property name="text">
+                <string>Apply To All</string>
+            </property>
+        </widget>
+        <widget class="QRadioButton">
+            <property name="name">
+                <cstring>rdInsert</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>69</x>
+                    <y>6</y>
+                    <width>60</width>
+                    <height>20</height>
+                </rect>
+            </property>
+            <property name="cursor">
+                <cursor>0</cursor>
+            </property>
+            <property name="text">
+                <string>Insert</string>
+            </property>
+            <property name="checked">
+                <bool>true</bool>
+            </property>
+        </widget>
+    </widget>
+    <widget class="QButtonGroup">
+        <property name="name">
+            <cstring>buttonGroup6</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>4</x>
+                <y>407</y>
+                <width>550</width>
+                <height>42</height>
+            </rect>
+        </property>
+        <property name="frameShape">
+            <enum>WinPanel</enum>
+        </property>
+        <property name="title">
+            <string></string>
+        </property>
+        <widget class="QPushButton">
+            <property name="name">
+                <cstring>cmdAbort</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>412</x>
+                    <y>6</y>
+                    <width>93</width>
+                    <height>30</height>
+                </rect>
+            </property>
+            <property name="text">
+                <string>Abort</string>
+            </property>
+        </widget>
+        <widget class="QPushButton">
+            <property name="name">
+                <cstring>cmdCancel</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>226</x>
+                    <y>6</y>
+                    <width>93</width>
+                    <height>30</height>
+                </rect>
+            </property>
+            <property name="text">
+                <string>Cancel</string>
+            </property>
+        </widget>
+        <widget class="QPushButton">
+            <property name="name">
+                <cstring>cmdOK</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>48</x>
+                    <y>6</y>
+                    <width>93</width>
+                    <height>30</height>
+                </rect>
+            </property>
+            <property name="text">
+                <string>OK</string>
+            </property>
+        </widget>
+    </widget>
+</widget>
+<connections>
+    <connection>
+        <sender>cmdOK</sender>
+        <signal>clicked()</signal>
+        <receiver>frmDecisionDlg</receiver>
+        <slot>cmdOK_clicked()</slot>
+    </connection>
+    <connection>
+        <sender>cmdCancel</sender>
+        <signal>clicked()</signal>
+        <receiver>frmDecisionDlg</receiver>
+        <slot>cmdCancel_clicked()</slot>
+    </connection>
+    <connection>
+        <sender>cmdAbort</sender>
+        <signal>clicked()</signal>
+        <receiver>frmDecisionDlg</receiver>
+        <slot>cmdAbort_clicked()</slot>
+    </connection>
+</connections>
+<tabstops>
+    <tabstop>lEdit</tabstop>
+    <tabstop>rdInsert</tabstop>
+    <tabstop>chkApply</tabstop>
+    <tabstop>cmdOK</tabstop>
+    <tabstop>cmdCancel</tabstop>
+    <tabstop>cmdAbort</tabstop>
+</tabstops>
+<includes>
+    <include location="local" impldecl="in implementation">frmdecisiondlg.ui.h</include>
+</includes>
+<variables>
+    <variable access="public">static int retVal;</variable>
+</variables>
+<slots>
+    <slot>initSetting( QString keyValue, QStringList fieldList )</slot>
+    <slot>cmdOK_clicked()</slot>
+    <slot>cmdCancel_clicked()</slot>
+    <slot>cmdAbort_clicked()</slot>
+</slots>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>

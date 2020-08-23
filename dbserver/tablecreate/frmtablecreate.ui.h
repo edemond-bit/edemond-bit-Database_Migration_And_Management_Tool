@@ -1,0 +1,976 @@
+/****************************************************************************
+** ui.h extension file, included from the uic-generated form implementation.
+**
+** If you want to add, delete, or rename functions or slots, use
+** Qt Designer to update this file, preserving your code.
+**
+** You should not define a constructor or destructor in this file.
+** Instead, write your code in functions called init() and destroy().
+** These will automatically be called by the form's constructor and
+** destructor.
+*****************************************************************************/
+#include <iostream.h>
+#include <math.h>
+#include <string.h>
+#include <qsqldatabase.h>
+#include <qtable.h>
+#include <qstringlist.h>
+#include <qheader.h>
+#include <qtable.h>
+#include <qsqlcursor.h>
+#include <qdatatable.h>
+#include <qsqlselectcursor.h>
+#include <qcombobox.h>
+#include <qinputdialog.h>
+#include <qmessagebox.h>
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#include <qthread.h>
+//`````````Thread Class Definition``````````
+class ThreadOK : public QThread
+{
+public:
+    frmTableCreate *obj;
+    ThreadOK(frmTableCreate *ob)
+    {
+	obj = ob;
+    };
+    
+    virtual void run()
+    {
+	obj->cmdOK_clicked();
+    }
+};
+
+class ThreadProceed : public QThread
+{
+public:
+    frmTableCreate *obj;
+    ThreadProceed(frmTableCreate *ob)
+    {
+	obj = ob;
+    };
+    
+    virtual void run()
+    {
+	obj->cmdProceed_clicked();
+    }
+};
+
+class ThreadClose : public QThread
+{
+public:
+    frmTableCreate *obj;
+    ThreadClose(frmTableCreate *ob)
+    {
+	obj = ob;
+    };
+    
+    virtual void run()
+    {
+	obj->accept();
+    }
+};
+//````````````````````````````````````````````````````
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+bool frmTableCreate::isNewFields = 0;
+QStringList frmTableCreate::oldTables = ""; //Old tables we have to insert new rs values
+QStringList frmTableCreate::oldTableAffect = ""; //Old tables we have to update
+QStringList frmTableCreate::newTables = ""; //New tables we have insert data
+int frmTableCreate::startColumn = 0; 
+bool frmTableCreate::updateFlag = false; //If true, updae old values with new ones in duplicate fields
+//QStringList frmTableCreate::ftabList = "";  //Contains only new fields
+//````````````````````````````````````````````
+void frmTableCreate::init()
+{
+    tableStatus = false;
+    rowToCh = colToCh = 0;
+    numberTables = 0;
+    cmdProceed->setEnabled(false);
+    cmdIgnore->setEnabled(false);
+    isNewFields = false;
+    lblPk->setHidden(true);
+    cmbPrimaryKey->setHidden(true);
+    lblPkn->setHidden(true);
+    txtPkn->setHidden(true);
+    runInSilentMode = false;
+    //~~~~~~~~~~
+    lblImportTo->setHidden(true);
+    cmbImportTo->setHidden(true);
+    lblMatch->setHidden(true);
+    cmbMatch->setHidden(true);
+    //~~~~~~~~~~
+    connect(cmdCancel,SIGNAL(clicked()),this,SLOT(accept()));
+}
+
+void frmTableCreate::setTableAttrTypes(bool indexingRequire)
+{
+    QStringList colList,dtypeList,importToList;
+    QString strHeader = "",label = "",tempTabName = "";
+    bool ok = false;
+    int itr,numeric;
+    
+    indexingRequired = indexingRequire;
+    mtabList.clear();
+    ftabList.clear();
+    rows = columnList.count();
+    cols = 3;
+    //Creating Column List for Table's Column Data Type Settings
+    colList.append("Field");
+    colList.append("Data Type");
+    colList.append("Preferred Length / Value");
+    
+    //Creating DataType List
+    dtypeList.append("VARCHAR");
+    dtypeList.append("INT");
+    dtypeList.append("FLOAT");
+    dtypeList.append("ENUM");
+    
+    cmbDataType->insertStringList(dtypeList,0);
+    cmbDataType->setCurrentItem(0);
+    
+    table1->setNumRows(rows);
+    table1->setNumCols(cols);
+    table1->setColumnLabels(colList);
+    
+    colList.clear();
+    //Populate Import To cpmbo box with existing tables in the database and Match with combo box with columns in the table[START]
+    importToList = sqlDB->tables(); //Get a list of tables are in the database
+    importToList.prepend("");
+    cmbImportTo->insertStringList(importToList);
+    connect(cmbImportTo,SIGNAL(activated(const QString &)),this,SLOT(cmbImportTo_activated(const QString &)));
+    cmbImportTo_activated(cmbImportTo->currentText());
+    //Populate Import To cpmbo box with existing tables in the database and Match with combo box with columns in the table[STOP]
+    
+    colList.clear();
+    tag = "";
+    itr = 0;
+    QStringList::Iterator itMaxVal = maxValSmplList.begin();
+    for(QStringList::Iterator it = columnList.begin(); it != columnList.end(); ++it,++itr,++itMaxVal)
+    {
+	strHeader = *it;
+	strHeader = strHeader.remove("#");
+	strHeader = strHeader.remove(".");
+	strHeader = strHeader.remove("*");
+	strHeader = strHeader.remove("-");
+	numeric = strHeader.toULong(&ok,10);
+	
+	if(ok)
+	{
+	    if(tag.isEmpty())
+	    {
+		label = "Some field/s contain no alpha numeric charecter\n Database doesn't allow numeric fields\n Enter some alphabet charecter/s(special charecter/s not allowed): ";
+		while(1)
+		{
+		    tag = QInputDialog::getText(tr("Field name ambiguity"),tr(label),QLineEdit::Normal,QString::null,&ok,0);
+		    if(ok && !tag.isEmpty()) 
+		    {
+			if(checkTagNameSyntax(tag))
+			    break;
+			else
+			    QMessageBox::information(this,tr("Tag Name"),tr("Not Permitted Tag Name: ") + tag + tr("\nProblem with given name! \nTable name can contains only charecter from 'A' to 'Z' case insensitive, \n'0' to '9' and underscore"));
+		    }
+		}
+	    }
+	    strHeader = strHeader.prepend(tag);
+	    ok = false;
+	}
+	table1->setText(itr,0,strHeader);
+	colList.append(strHeader);
+	if(!ifFoundInStandardTypes(itr,*it))
+	    byIdentificationOfDataType_Length(itr,*itMaxVal);
+	table1->setText(itr,3,tr(""));
+	table1->setText(itr,4,tr(""));
+    }
+    
+    columnList.clear();
+    columnList = colList;
+    colList.clear();
+    table1->setColumnReadOnly(0,true);
+    table1->setColumnReadOnly(1,true);
+    table1->setColumnReadOnly(2,false);
+    for(register int itc = 0; itc < cols; ++itc)
+	table1->adjustColumn(itc); 
+    cmbPrimaryKey->insertStringList(columnList,0);
+    cmbPrimaryKey->setCurrentItem(0);
+    txtPkn->setText(table1->text(0,0));
+    tableName.remove('\\'); tableName.remove(" ");
+    txtTableName->setText(tableName.section('-',0,0));
+    if((txtTableName->text()).contains(".") > 0)
+	QMessageBox::information(this,tr("Error in table name"),tr("Table name must not contains any dot!\nData import isn't possible...\nRemove '.' from the name of the file to import"));
+}
+
+void frmTableCreate::cmbImportTo_activated(const QString &currTab)
+{
+    int headCount = 0;
+    QStringList colList;
+    
+    if(currTab != "")
+    {
+	QSqlCursor *tempCur = new QSqlCursor(currTab,true,sqlDB);
+	tempCur->setMode(0);
+	QDataTable *tempView = new QDataTable(tempCur,true,0,"datatable");
+	tempView->refresh();
+	QHeader *head = tempView->horizontalHeader();
+	headCount = head->count();
+	//Populate field list boxes[START]
+	for(int i = 0; i < headCount; ++i)
+	    colList.append(head->label(i));
+	//Populate field list boxes[STOP]
+	cmbMatch->clear();
+	cmbMatch->insertStringList(colList);
+	tempView->close();
+	tempCur->clear();
+	delete tempView;
+	tempView = 0;
+	delete tempCur;
+	tempCur = 0;
+    }
+    else
+	cmbMatch->clear();
+}
+
+bool frmTableCreate::checkTagNameSyntax(QString &dbName)
+{
+    bool ok = true;
+    int length = dbName.length();
+    QChar ch;
+	    
+    for(register int i = 0; i < length; ++i)
+    {
+	ch = dbName.at(i);
+	if(!((ch >= 'A' && ch <= 'Z') || (ch == '_') || (ch >= 'a' && ch <= 'z') || (ch >= '0' && ch <= '9')))
+	{
+	    ok = false;
+	    break;
+	}
+    }
+    return ok;
+}
+
+bool frmTableCreate::runCallsInSilentMode()
+{
+    if(silentRunMode == 0)
+    {
+	ThreadOK thOK(this);
+	ThreadProceed thProceed(this);
+	ThreadClose thClose(this);
+    
+	thOK.start();
+	thOK.wait();
+	
+	thProceed.start();
+	thProceed.wait();
+	
+	thClose.start();
+	thClose.wait();
+    }
+    else
+    {
+	ThreadOK thOK(this);
+	ThreadProceed thProceed(this);
+	ThreadClose thClose(this);
+    
+	thOK.start();
+	thOK.wait();
+	
+	thProceed.start();
+	thProceed.wait();
+    
+	thClose.start();
+	thClose.wait();
+    }
+    return true;
+}
+
+bool frmTableCreate::ifFoundInStandardTypes(int &rowIndex,QString fieldName)
+{
+    QString query;
+    bool okStat;
+    
+    okStat = false;
+    if(sqlDB->isOpen())
+    {
+	query = "select datatype,value from standardtypes where fieldtype = \"" + fieldName + "\";";
+	QSqlQuery qResult = sqlDB->exec(query);
+	if(qResult.numRowsAffected())
+	{
+	    if(qResult.next())
+	    {
+		table1->setText(rowIndex,1,qResult.value(0).toString());
+		table1->setText(rowIndex,2,qResult.value(1).toString());
+		okStat = true;
+	    }
+	}
+    }
+    return okStat;
+}
+
+void frmTableCreate::byIdentificationOfDataType_Length(int &rowIndex,QString fieldVal)
+{
+    bool ok;
+    
+    int intVal = fieldVal.toInt(&ok,10);
+    if(!ok)
+    {
+	double doubleVal = fieldVal.toDouble(&ok);
+	if(!ok) //varchar
+	{
+	    table1->setText(rowIndex,1,cmbDataType->text(0));
+	    table1->setText(rowIndex,2,tr(QString::number((int)fieldVal.length())));
+	}
+	else //float
+	{
+	    table1->setText(rowIndex,1,cmbDataType->text(2));
+	    table1->setText(rowIndex,2,tr(QString::number((int)fieldVal.length())) + tr(",") + tr(QString::number((int)(fieldVal.section('.',-1)).length())));
+	}
+    }
+    else //Integer
+    {
+	table1->setText(rowIndex,1,cmbDataType->text(1));
+	table1->setText(rowIndex,2,tr(QString::number((int)fieldVal.length())));
+    }
+}
+
+void frmTableCreate::cmdOK_clicked()
+{
+    QString tableToDelete;
+    
+    if(sqlDB->isOpen())
+    {
+	QStringList tabList;
+	bool okStat,ok;
+	int number;
+
+	lEdit->clear();
+	lEdit->setText("Checking for duplicate table...");
+	tabList.clear();
+	tabList = sqlDB->tables(); //Get a list of tables are in the database
+	//Cheaking for duplicate avoidence
+	okStat = true;
+	mtabList.clear();
+	if(cmbImportTo->currentText() != "")
+	{
+	    mtabList.append(cmbImportTo->currentText());
+	    tableName = cmbImportTo->currentText();
+	    matchingColumn = cmbMatch->currentItem();
+	}
+	else
+	{
+	    matchingColumn = -1;
+	    for(QStringList::iterator it = tabList.begin(); it != tabList.end(); ++it)
+	    {
+		if((*it).upper() == (tableName.section('-',0,tableName.contains('-',false) - 1)).upper())//Exact table name matching
+		{
+		    okStat = false;
+		    tableToDelete = *it;
+		    break;
+		}
+		else if((*it).upper() == (tableName.section('-',0,0)).upper()) //e.g. Datam ~ Datam-import
+		    mtabList.append(*it);
+		else if((*it).section('_',0,(*it).contains('_') - 1) == tableName.section('-',0,0)) //e.g.  Datam_f_1 ~ Dtam_f-import
+		{
+		    number = ((*it).section('_',-1)).toInt(&ok,10);
+		    if(ok)
+			mtabList.append(*it);
+		}
+	    }
+	}
+	
+	if(okStat == false) //exact table name matching
+	    okStat = decide_tableCreation(tableToDelete);
+	
+	if(okStat == true)
+	{
+	    if(columnList.count() > 1)
+	    {
+		numberTables = (columnList.count() - (indexingRequired ? 2 : 1))/maxcols;
+		numberTables = ((columnList.count() - (indexingRequired ? 2 : 1))%maxcols > 0 ? numberTables + 1 : numberTables);
+		numberTables = (numberTables == 0 ? 1 : numberTables);
+	    }
+	    else
+		numberTables = 1;
+	    oldTables.clear();
+	    oldTableAffect.clear();
+	    newTables.clear();
+	    startColumn = 0;
+	    colIndexArrFlag = false;
+	    if(mtabList.count())
+		multipleTable_CheckIn();//Multiple Table Creation & Modification
+	    else
+	    {
+		if(numberTables == 1)
+		    singleTable(); //Single Table Creation
+		else
+		    multipleTable(0,1); //Multiple Table Creation
+	    }
+	}
+	else
+	    tableStatus = false;
+    }
+    else
+    {
+	tableStatus = false;
+	QMessageBox::information(this, "Connection Problem!","Database is not Connected");
+    }
+}
+
+bool frmTableCreate::decide_tableCreation(QString tableToDelete)
+{
+    QString str;
+    str = "Table " + tableName.section('-',0,tableName.contains('-',false) - 1) + " already exist!";
+    str += "\nDo you want to drop the existing table from the Database ?";
+    str += "\nOtherwise the requested query for Table creation can't be executed";
+    if(!QMessageBox::question(this, tr("Duplicate Table!"),tr(str),tr("Drop Table"),tr("Leave"),QString::null,0,1))
+    {
+	str = "DROP TABLE " + tableToDelete;
+	QSqlQuery sq = sqlDB->exec(str);
+	if(sq.isActive())
+	{	
+	    lEdit->append(tr("Table: ") + (tableName.section('-',0,tableName.contains('-',false) - 1)) + tr(" dropped successfully"));
+	    return true;
+	}
+	else
+	{
+	    lEdit->append("Can't drop table: " + (tableName.section('-',0,tableName.contains('-',false) - 1)));
+	    return false;
+	}
+    }
+    else
+	return false;
+}
+
+void frmTableCreate::singleTable()
+{
+    QString query,tmpQuery;
+    
+    //cout << "\nSingle Table\n";
+    query = "CREATE TABLE " + tableName.section('-',0,0) + "(";
+    for(register int itr = 0; itr < rows; ++itr)
+    {
+	tmpQuery += table1->text(itr,0) + " " + table1->text(itr,1) + "(" + table1->text(itr,2) + ")";
+	if(itr < rows - 1)		
+	    tmpQuery += ",";
+    }
+    query += tmpQuery + ", CONSTRAINT " + txtPkn->text();
+    query += " PRIMARY KEY (" + cmbPrimaryKey->currentText() + "))ENGINE=MyISAM";
+    lEdit->append(query);
+	   
+    isNewFields = false;
+    QSqlQuery sq = sqlDB->exec(query);
+    if(sq.isActive())
+    {
+	newTables.append(tableName.section('-',0,0));	
+	lEdit->append("Table created successfully");
+	tableStatus = true;
+    }
+    else
+    {
+	tableStatus = false;
+	lEdit->append("Table creation unsuccessful");
+	lEdit->append(sq.lastError().text());
+    }
+}
+
+void frmTableCreate::multipleTable_CheckIn()
+{
+    QStringList *databaseColList;
+    QString query,fieldStr,pkID1,pkID2,currTable;
+    int numrec = 0,counter = 0,skipCount = 1;
+    bool okStat;
+    
+    //cout << "\nMultiple Table Check In\n";
+    QStringList::Iterator colID = columnList.begin();
+    pkID1 = *colID;
+    ++colID;
+    if(indexingRequired)
+    {
+	pkID2 = *colID;
+	++colID;
+	++skipCount;
+    }
+    colIndexArr = new int[columnList.count() - skipCount];
+    okStat = false;
+    databaseColList = new QStringList[mtabList.count()];
+    for(QStringList::Iterator itr = mtabList.begin(); itr != mtabList.end(); ++itr,++counter)
+    {
+	query = "SELECT * FROM " + *itr;
+	QSqlSelectCursor cursor(query,sqlDB);
+	numrec = cursor.count();
+	databaseColList[counter].append(*itr);
+	for(register int i = 0; i < numrec; ++i)
+	{
+	    databaseColList[counter].append(cursor.fieldName(i));
+	    if(*colID == cursor.fieldName(i))
+	    {
+		startColumn = i - 1;
+		okStat = true;
+	    }
+	}
+    }
+    
+    if(okStat == false)
+	startColumn = (maxcols == (numrec - (indexingRequired ? 2 : 1)) ? 0 : numrec - (indexingRequired ? 2 : 1));
+    okStat = false;
+    int arrIndex = 0;
+    int loop2,linearIndex;
+    for(; colID != columnList.end(); ++colID)
+    {
+	okStat = false;
+	linearIndex = -1;
+	for(register int loop = 0; loop < counter; ++loop)
+	{
+	    loop2 = 0;
+	    for(QStringList::Iterator itr2 = databaseColList[loop].begin(); itr2 != databaseColList[loop].end(); ++itr2,++loop2)
+	    {
+		if(loop2 == 0)
+		    currTable = *itr2; //Name of Current Table
+		else if(loop2 >= 1) //For 'loop2 = 1' it is primary keyField 
+		    ++linearIndex; //Contains current column index
+		if(*itr2 == *colID)
+		{
+		    colIndexArr[arrIndex++] = linearIndex;
+		    containedInWhichTable.append(currTable + "," + *colID);
+		    okStat = true;
+		    break;
+		}
+	    }
+	    if(okStat == true)
+		break;
+	}
+	
+	if(okStat == false)
+	{
+	    colIndexArr[arrIndex++] = -1;
+	    containedInWhichTable.append("thisisnewfield," + *colID);
+	}
+    }
+    //~~~~~~~~~~~~Generating Index of  new fields[START]~~~~~~~~~~~~
+    int unassigndIndexCount = 0,numColAccom;
+    maxIndex = 0;
+    for(register int i = 0; i < (int)columnList.count() - skipCount; ++i)
+    {
+	maxIndex = (colIndexArr[i] >= maxIndex ? colIndexArr[i] : maxIndex);
+	if(colIndexArr[i] == -1)
+	    ++unassigndIndexCount;
+    }
+    
+    QStringList::Iterator itr = mtabList.begin();
+    for(; itr != mtabList.end(); ++itr);
+    --itr;
+    query = "SELECT * FROM " + *itr;
+    QSqlSelectCursor cursor(query,sqlDB);
+    numColAccom = maxcols - cursor.count() + (indexingRequired ? 2 : 1);
+    if(maxIndex == 0)
+	maxIndex = (mtabList.count() - 1)*(maxcols + (indexingRequired ? 2 : 1)) + cursor.count() - 1; //-1 for array index start from 0
+    if((unassigndIndexCount - numColAccom) > 0) //Accomodation of new columns require extra table/s
+    {
+	int numSubTables;
+	unassigndIndexCount = unassigndIndexCount - numColAccom;
+	numSubTables = (int)ceil(double(unassigndIndexCount)/double(maxcols)) + 1;
+	for(register int i = 0; i < numSubTables; ++i,++maxIndex)
+	{
+	    for(register int j = 0, numColAccomCounter = 0; j < (int)columnList.count() - skipCount; ++j)
+	    {
+		if(numColAccomCounter < numColAccom && colIndexArr[j] == -1)
+		{
+		    colIndexArr[j] = ++maxIndex;
+		    ++numColAccomCounter;
+		}
+		else if(numColAccomCounter == numColAccom)
+		    break;
+	    }
+	    
+	    if((unassigndIndexCount - maxcols) > 0)
+	    {
+		numColAccom = maxcols;
+		unassigndIndexCount = unassigndIndexCount - maxcols;	
+	    }
+	    else
+		numColAccom = unassigndIndexCount;
+	    maxIndex += (indexingRequired ? 1 : 0);
+	}
+    }
+    else //Accomodation of all new columns in last table
+    {
+	//maxIndex = (indexingRequired ? -1 : 0);
+	for(register int i = 0; i < (int)columnList.count() - skipCount; ++i)
+	    colIndexArr[i] = (colIndexArr[i] == -1 ? ++maxIndex : colIndexArr[i]);
+    }
+    colIndexArrFlag = true;
+    //~~~~~~~~~~~Generating Index of  new fields[END]~~~~~~~~~~~~~~~
+    
+    lEdit->append("*******************************CAUTION**********************************\n");
+    lEdit->append("Fields contain in tables:\n");
+    okStat = false;
+    ftabList.clear();
+    for(QStringList::Iterator itr = mtabList.begin(); itr != mtabList.end(); ++itr)
+    {
+	query = (*itr).upper() + ":  [";
+	lEdit->append(query);
+	query = pkID1 + ",";
+	if(indexingRequired)
+	    query += pkID2 + ",";
+	for(QStringList::Iterator itr1 = containedInWhichTable.begin(); itr1 != containedInWhichTable.end(); ++itr1)
+	{
+	    if((*itr1).section(',',0,0) == *itr)
+	    {
+		query += (*itr1).section(',',-1) + ",";
+		okStat = true;
+	    }
+	}
+	query.truncate(query.length() - 1);
+	ftabList.append(query);
+	query += "]\n";
+	lEdit->append(query);
+	if(okStat)
+	    oldTableAffect.append(*itr);
+	else
+	    oldTables.append(*itr);
+	okStat = false;
+    }
+    //Ensure 'oldTables' contains only tables which are older than that of  'oldTableAffect' [START]
+    if(oldTableAffect.count() > 0)
+    {
+	QString minTab;
+	QStringList tempList;
+
+	QStringList::Iterator itr2 = oldTableAffect.begin();
+	minTab = *itr2;
+	if(oldTableAffect.count() > 1)
+	{
+	    ++itr2;
+	    do
+	    {
+		minTab = (strcmp(minTab,*itr2) > 0 ? *itr2 : minTab);
+		++itr2;
+	    }while(itr2 != oldTableAffect.end());
+	}
+
+	if(oldTables.count() > 0)
+	{
+	    for(QStringList::Iterator itr3 = oldTables.begin(); itr3 != oldTables.end(); ++itr3)
+	    {
+		if(strcmp(minTab,*itr3) > 0)
+		    tempList.append(*itr3);
+	    }
+	    oldTables.clear();
+	    for(QStringList::Iterator itr3 = tempList.begin(); itr3 != tempList.end(); ++itr3)
+		oldTables.append(*itr3);
+	}
+    }
+    //Ensure 'oldTables' contains only tables which are older than that of  'oldTableAffect' [END]
+    
+    query = "NEW FIELDS: [";
+    lEdit->append(query);
+    okStat = false;
+    query = "";
+    for(QStringList::Iterator itr = containedInWhichTable.begin(); itr != containedInWhichTable.end(); ++itr)
+    {
+	if((*itr).contains("thisisnewfield"))
+	{
+	    query += (*itr).section(',',-1) + ",";
+	    okStat = true;
+	}
+    }
+    if(okStat)
+	query.truncate(query.length() - 1);
+    ftabList.append(query);
+    query += "]\n";
+    lEdit->append(query);
+    lEdit->append("If you want to update/insert data in common columns(if any) and insert new columns(if any) in the table then press \'Proceed\' button...\nELSE if you want to postpone table creation/update operation then press \'Ignore\' button\n");
+    lEdit->append("***************************CAUTION[END]**********************************\n");
+    cmdOK->setEnabled(false);
+    cmdProceed->setEnabled(true);
+    cmdIgnore->setEnabled(true);
+    cmdCancel->setEnabled(false);
+    
+    for(register int loop = 0; loop < counter; ++loop)
+	databaseColList[loop].clear();
+    delete [] databaseColList;
+}
+
+void frmTableCreate::multipleTable(int startPivot,int index)
+{
+    QString query,tmpQuery;
+    int colLength = index;
+    
+    // cout << "\nMultiple Table\n";
+    //cout << "\nnumberTables: " << numberTables << " startPivot: " << startPivot << " colLength: " << colLength << endl;
+    for(register int i = startPivot; i < numberTables; ++i)
+    {
+	colLength += (i < numberTables - 1 ? maxcols : (((columnList.count() - index)%maxcols) > 0 ? ((columnList.count() - index)%maxcols) : maxcols));
+	query = "CREATE TABLE " + tableName.section('-',0,0) + tr("_") + QString::number(i) + "("; //Table naming method
+	tmpQuery = table1->text(0,0) + " " + table1->text(0,1) + "(" + table1->text(0,2) + "),";//primary key field for each table
+	if(indexingRequired)
+	    tmpQuery += table1->text(1,0) + " " + table1->text(1,1) + "(" + table1->text(1,2) + "),";//primary key field for each table
+	for(; index < colLength; ++index) //reading datatypes and generating query
+	{
+	    tmpQuery += table1->text(index,0) + " " + table1->text(index,1) + "(" + table1->text(index,2) + ")";
+	    if(index < colLength - 1)		
+		tmpQuery += ",";
+	}
+	query += tmpQuery + ", CONSTRAINT " + txtPkn->text() + QString::number(i);
+	query += " PRIMARY KEY(" + cmbPrimaryKey->currentText() + "))ENGINE=MyISAM";
+	lEdit->append(query);
+	isNewFields = false;
+	QSqlQuery sq2 = sqlDB->exec(query);
+	if(sq2.isActive())
+	{
+	    newTables.append(tableName.section('-',0,0) + tr("_") + QString::number(i));
+	    tmpQuery = "Table: " + tableName.section('-',0,0) + tr("_") + QString::number(i) + " created successfully";
+	    lEdit->append(tmpQuery);
+	    tableStatus = true;
+	}
+	else
+	{
+	    tableStatus = false;
+	    tmpQuery = "Table: " + tableName.section('-',0,0) + tr("_") + QString::number(i) + " creation unsuccessful";
+	    lEdit->append(tmpQuery);
+	    lEdit->append(sq2.lastError().text());
+	}
+    }
+}	
+
+void frmTableCreate::cmdIgnore_clicked()
+{
+    lEdit->append("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!PREVIOUS RECORDS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+    cmdOK->setEnabled(true);
+    cmdProceed->setEnabled(false);
+    cmdIgnore->setEnabled(false);
+    cmdCancel->setEnabled(true);
+}
+
+void frmTableCreate::cmdProceed_clicked()
+{
+    QStringList::Iterator lastTable;
+    QStringList::Iterator newFields;
+    QString query,tmpQuery;
+    QStringList fieldList;
+    int numColsToInsert,index = 0;
+    
+    for(newFields = ftabList.begin(); newFields != ftabList.end(); ++newFields);
+    --newFields;
+    //cout << "\nNew Fields: " << *newFields << endl;
+    numColsToInsert = ((*newFields).isEmpty() ? 0 : ((*newFields).contains(",",false) <= 0 ? 1 : (*newFields).contains(",",false) + 1));
+    if(numColsToInsert)
+    {
+	for(register int i = 0; i < numColsToInsert; ++i)
+	    fieldList.append((*newFields).section(',',i,i));
+	//cout << "\nfieldList : " << fieldList.count() << endl;
+	for(lastTable = mtabList.begin(); lastTable != mtabList.end(); ++lastTable);
+	--lastTable;
+	//cout << *lastTable << endl;
+	query = "SELECT * FROM " + *lastTable;
+	QSqlSelectCursor cursor(query,sqlDB);
+	if(((int)cursor.count() - (indexingRequired ? 2 : 1)) < maxcols)
+	{
+	    tmpQuery = oldTableAffect.join(",");
+	    if(!tmpQuery.contains(*lastTable,false))
+	    {
+		oldTableAffect.append(*lastTable);
+		oldTables.remove(*lastTable);
+	    }
+	    tmpQuery = "";
+	    if((maxcols - ((int)cursor.count() - (indexingRequired ? 2 : 1))) >= numColsToInsert) //Insert all new columns in the last table
+	    {
+		query = "ALTER TABLE " + *lastTable + " ADD COLUMN(";
+		index = 0;
+		for(QStringList::Iterator it = fieldList.begin(); it != fieldList.end(); ++it)
+		{
+		    if(!index)
+		    {
+			for(; index < table1->numRows(); ++index)
+			    if(*it == table1->text(index,0))
+				break;
+		    }
+		    query += table1->text(index,0) + " " + table1->text(index,1) + "(" + table1->text(index,2) + "),";
+		    ++index;
+		}
+		query.truncate(query.length() - 1);
+		query += ");";
+		QSqlQuery sq = sqlDB->exec(query);
+		if(sq.isActive())
+		{
+		    tmpQuery = query;
+		    tmpQuery += "\nTable: " + *lastTable + " updated successfully";
+		    lEdit->append(tmpQuery);
+		    tableStatus = true;
+		    isNewFields = true;
+		}
+		else
+		{
+		    tmpQuery = query;
+		    tmpQuery += "\nTable: " + *lastTable + " updation unsuccessful";
+		    lEdit->append(tmpQuery);
+		    tableStatus = false;
+		    isNewFields = false;
+		}
+	    }
+	    else //Insert 'numColsToInsert' number of columns in last table
+	    {
+		if((numColsToInsert = maxcols - ((int)cursor.count() - (indexingRequired ? 2 : 1))))
+		{
+		    query = "ALTER TABLE " + *lastTable + " ADD COLUMN(";
+		    index = 0;
+		    for(QStringList::Iterator it = fieldList.begin(); it != fieldList.end(); ++it)
+		    {
+			if(!index)
+			{
+			    for(; index < table1->numRows(); ++index)
+				if(*it == table1->text(index,0))
+				    break;
+			}
+			query += table1->text(index,0) + " " + table1->text(index,1) + "(" + table1->text(index,2) + "),";
+			if(index == numColsToInsert + (indexingRequired ? 1 : 0))
+			    break;
+			++index;
+		    }
+		    query.truncate(query.length() - 1);
+		    query += ");";
+		    QSqlQuery sq = sqlDB->exec(query);
+		    if(sq.isActive())
+		    {
+			tmpQuery = query;
+			tmpQuery += "\nTable: " + *lastTable + " updated successfully";
+			lEdit->append(tmpQuery);
+			tableStatus = true;
+			isNewFields = true;
+		    }
+		    else
+		    {
+			tmpQuery = query;
+			tmpQuery += "\nTable: " + *lastTable + " updation unsuccessful";
+			lEdit->append(tmpQuery);
+			tableStatus = false;
+			isNewFields = false;
+		    }
+		}
+		//Next data insertion in new tables
+		numberTables = (fieldList.count() - numColsToInsert)/maxcols;
+		numberTables = ((fieldList.count() - numColsToInsert)%maxcols > 0 ? numberTables + 1 : numberTables);
+		numberTables += mtabList.count();	
+		multipleTable(mtabList.count(),index+1);
+	    }
+	}
+	else //Create new tables for insertion of  'numColsToInsert' number of columns in new tables
+	{
+	    //Next data insertion in new tables
+	    numberTables = numColsToInsert/maxcols;
+	    numberTables = (numColsToInsert%maxcols > 0 ? numberTables + 1 : numberTables);
+	    numberTables += mtabList.count();
+	    multipleTable(mtabList.count(),(indexingRequired ? 2 : 1));
+	}
+	cmdOK->setEnabled(true);
+	cmdProceed->setEnabled(false);
+	cmdIgnore->setEnabled(false);
+	cmdCancel->setEnabled(true);
+    }	
+    else
+    {
+	cmdOK->setEnabled(true);
+	cmdProceed->setEnabled(false);
+	cmdIgnore->setEnabled(false);
+	cmdCancel->setEnabled(true);
+	
+	if(runInSilentMode == false)
+	{
+	    if(QMessageBox::question(this, "No Column to insert!","All Columns are Duplicate!\n Do you want to \'Insert\'/\'Update\' records of the existing columns?",QMessageBox::Yes ,QMessageBox::No,QMessageBox::NoButton) == QMessageBox::Yes)
+		tableStatus = true;
+	    else
+		tableStatus = false;
+	}
+	else
+	    tableStatus = true;
+    }
+    fieldLengthModification();
+}
+
+void frmTableCreate::fieldLengthModification()
+{
+    int index = 0;
+    QString fieldName,affectedTabName;
+    QString query;
+    //~~~~~~~~~This part identify field/column by it's id then check weather field length should be changed or not[START]
+    for(QStringList::Iterator itr = containedInWhichTable.begin(); itr != containedInWhichTable.end(); ++itr)
+    {
+	if(!((*itr).contains("thisisnewfield")))
+	{
+	    affectedTabName = (*itr).section(',',0,0);
+	    fieldName = (*itr).section(',',-1);
+	    for(index = 0; index < (int)columnList.count(); ++index)
+	    {
+		if((table1->text(index,0)).upper() == fieldName.upper())
+		    break;
+	    }
+	    
+	    QSqlRecordInfo recInfo = sqlDB->recordInfo(affectedTabName); //Search for field length from the Table in the Database
+	    QSqlFieldInfo fieldInfo = recInfo.find(fieldName);
+	    if(fieldInfo.length() < (int)(table1->text(index,2)).length())
+	    {
+		query = "alter table " + affectedTabName + " modify " + fieldName + " " +  table1->text(index,1) + "(" + table1->text(index,2) + ");" ;
+		if(sqlDB->isOpen())
+		{
+		    sqlDB->transaction();
+		    QSqlQuery sq = sqlDB->exec(query);
+		    sqlDB->commit();
+		}
+	    }
+	}
+    }
+    containedInWhichTable.clear();
+    //~~~~~~~~~This part identify field/column by it's id then check weather field length should be changed or not[STOP]
+}
+
+void frmTableCreate::chkUpdate_toggled( bool state)
+{
+    if(state == true)
+	updateFlag = true;
+    else
+	updateFlag = false;
+}
+
+void frmTableCreate::table1_clicked( int row, int col, int button, const QPoint &p )
+{
+    if(button == Qt::LeftButton && col == 1)
+	colToCh = col,rowToCh = row;
+}
+
+void frmTableCreate::accept()
+{
+    sqlDB = NULL;
+    QDialog::accept();
+}
+
+void frmTableCreate::cmbPrimaryKey_activated( const QString &pName)
+{
+    txtPkn->setText(pName);
+}
+
+void frmTableCreate::cmbDataType_activated( const QString &text )
+{
+    //cout << "\nS: " << colToCh <<endl;
+    if(colToCh == 1)
+    {
+	table1->setText(rowToCh,colToCh,text);
+	table1->setText(rowToCh,colToCh+1,"");
+	rowToCh = colToCh = 0;
+    }
+}
+
+void frmTableCreate::chkSilentRun_clicked()
+{
+    if(chkSilentRun->isChecked())
+	runInSilentMode = true;
+    else
+	runInSilentMode = false;
+}
+
+void frmTableCreate::hideSilentRun()
+{
+    chkSilentRun->hide();
+}
+
+void frmTableCreate::setSilentRunMode(int mode)
+{
+    silentRunMode = mode;
+}

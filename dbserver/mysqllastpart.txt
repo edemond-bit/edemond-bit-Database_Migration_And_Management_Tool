@@ -1,0 +1,31 @@
+//Below portion for insrting new rs id/s in the old table/s
+	    //Counter = frmTableCreate::oldTables.count();
+	    /*if(Counter)
+	    {	
+		//cur = new QSqlCursor *[Counter];
+		//buffer = new QSqlRecord *[Counter];
+		//This portion to insert new 'rs' values in old tables which are not under current updation[START]
+		int startIndex = 0;
+		for(QStringList::Iterator it = frmTableCreate::oldTables.begin(); it != frmTableCreate::oldTables.end(); ++it,++startIndex)	
+		{
+		    cur[startIndex] = new QSqlCursor(*it,true,sqlDB);
+		    for(QStringList::Iterator itc = columnList.begin(); itc != columnList.end(); ++itc)
+		    {
+			query = cur[startIndex]->fieldName(0) + "=" + *itc;
+			cur[startIndex]->select(query);
+			if(!cur[startIndex]->next())
+			{
+			    buffer[startIndex] = cur[startIndex]->primeInsert();
+			    buffer[startIndex]->setValue(0,*itc);
+			    if(!cur[startIndex]->insert())
+			    {
+				if(cur[startIndex]->lastError().text())
+				    cout << "\nERROR: " << cur[startIndex]->lastError().text() << endl;
+			    }
+			}
+		    }
+		}
+		//This portion to insert new 'rs' values in old tables which are not under current updation[END]
+		delete [] cur;
+		delete [] buffer;
+	    }*/

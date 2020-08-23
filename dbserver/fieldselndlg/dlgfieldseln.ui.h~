@@ -1,0 +1,191 @@
+/****************************************************************************
+** ui.h extension file, included from the uic-generated form implementation.
+**
+** If you want to add, delete, or rename functions or slots, use
+** Qt Designer to update this file, preserving your code.
+**
+** You should not define a constructor or destructor in this file.
+** Instead, write your code in functions called init() and destroy().
+** These will automatically be called by the form's constructor and
+** destructor.
+*****************************************************************************/
+#include <qfile.h>
+#include <qcheckbox.h>
+#include <qstringlist.h>
+#include <qmessagebox.h>
+#include <iostream.h>
+
+void dlgfieldseln::init()
+{
+    fldLst.clear();
+    applyToAll = false;
+    num_Rows = 0;
+    mergeState = false;
+    chkMerge->setEnabled(false);
+    closeStatFlag = false;
+}
+
+void dlgfieldseln::initSettings(QString fileName, bool isMerge)
+{
+    QString scanBuf;
+    QStringList headerList,fieldList;
+    int row = 0, col = 0;
+    
+    if(isMerge)
+    {
+	chkMerge->setChecked(isMerge);
+	chkMerge->setEnabled(false);
+    }
+    if(fileName.contains(tr("\\")) > 0)
+	fileName.remove(tr("\\"));
+    tabName = fileName;
+    applyToAll = false;
+    num_Rows = 0;
+    headerList.append(tr("Field name"));
+    headerList.append(tr("Edit field name"));
+    headerList.append(tr("Select field"));
+    
+    QFile fpRead(fileName);
+    if(fpRead.open(IO_ReadOnly | IO_Truncate))
+    {
+	QTextStream fpIn1(&fpRead);
+	fpIn1.setEncoding(QTextStream::UnicodeUTF8);
+	
+	do
+	{
+	    scanBuf = fpIn1.readLine();
+	}while(scanBuf.contains("#",FALSE) > 0);
+	
+	fieldList = QStringList::split('\t',scanBuf);
+	fpRead.close();
+	table1->setNumRows(fieldList.count());
+	table1->setNumCols(3);
+	table1->setColumnLabels(headerList);
+	for(QStringList::Iterator it = fieldList.begin(); it != fieldList.end(); ++it,++row)
+	{
+	    table1->setText(row,col,*it);
+	    table1->setText(row,col+1,*it);
+	    QCheckBox *cb = new QCheckBox(table1);
+	    table1->setCellWidget(row,col+2,cb);
+	}
+	table1->adjustColumn(0);
+	table1->setColumnReadOnly(0,true);
+	table1->adjustColumn(1);
+	table1->setColumnReadOnly(1,false);
+	table1->adjustColumn(2);
+	table1->setColumnReadOnly(2,true);
+    }
+}
+
+void dlgfieldseln::cmdClose_clicked()
+{
+    if(closeStatFlag)
+    {
+	fldLst.clear();
+	for(register int i = 0; i < table1->numRows(); ++i)
+	{
+	    QCheckBox *cb = (QCheckBox *)table1->cellWidget(i,2);
+	    if(cb->isChecked())
+		fldLst.append(QString::number(i + 1));
+	}
+	num_Rows = table1->numRows();
+	applyToAll = chkApplyAll->isChecked();
+    }
+    else
+	num_Rows = -1;
+    accept();
+}
+
+void dlgfieldseln::cmdEdit_clicked()
+{
+    QString failList = "", str = "";
+    
+    for(register int i = 0; i < table1->numRows(); ++i)
+    {
+	QCheckBox *cb = (QCheckBox *)table1->cellWidget(i,2);
+	if(cb->isChecked())
+	{
+	    str = table1->text(i,1);
+	    if(checkfieldNameSyntax(str))
+	    {
+		if(i > 0)
+		    table1->setText(i,1,(tabName.section('/',-1)).remove(".txt") + tr("_") + str);
+	    }
+	    else
+		failList += QString::number(i + 1) + ",";
+	}
+    }
+    failList.truncate(failList.length() - 1);
+    if(!failList.isEmpty())
+    {
+	QMessageBox::information(this,tr("Edit Status"),tr("Invalid fieldname in row number: ") + failList + tr("\nField name can contains only charecter from 'A' to 'Z' case insensitive, \n'0' to '9' and underscore"));
+	closeStatFlag = false;
+    }
+    else
+	closeStatFlag = true;
+}
+
+bool dlgfieldseln::checkfieldNameSyntax(QString &fieldName)
+{
+    bool ok = true;
+    int length = fieldName.length();
+    QChar ch;
+
+    for(register int i = 0; i < length; ++i)
+    {
+	ch = fieldName.at(i);
+	if(!((ch >= 'A' && ch <= 'Z') || (ch == '_') || (ch >= 'a' && ch <= 'z') || (ch >= '0' && ch <= '9')))
+	{
+	    ok = false;
+	    break;
+	}
+    }
+    return ok;
+}
+
+void dlgfieldseln::accept()
+{
+    QFile fpWrite(".correctField.txt");
+    if(fpWrite.open(IO_WriteOnly | IO_Truncate))
+    {
+	QTextStream fpOut(&fpWrite);
+	fpOut.setEncoding(QTextStream::UnicodeUTF8 );
+	for(register int i = 0; i < table1->numRows(); ++i)
+	{
+	    QCheckBox *cb = (QCheckBox *)table1->cellWidget(i,2);
+	    if(cb->isChecked())
+		fpOut << table1->text(i,1) << endl;
+	}
+	fpWrite.close();
+    }
+    QDialog::accept();
+}
+
+void dlgfieldseln::chkApplyAll_toggled(bool state)
+{
+    if(state)
+	chkMerge->setEnabled(true);
+    else
+	chkMerge->setEnabled(false);
+}
+
+
+void dlgfieldseln::chkMerge_toggled(bool state)
+{
+    if(state)
+    {
+	chkMerge->setChecked(true);
+	mergeState = true;
+    }
+    else
+    {
+	chkMerge->setChecked(false);
+	mergeState = false;
+    }
+}
+
+
+void dlgfieldseln::cmdAbort_clicked()
+{
+    
+}
